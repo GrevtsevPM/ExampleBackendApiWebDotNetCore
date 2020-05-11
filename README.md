@@ -2,6 +2,8 @@
 
 Резюме в каталоге Doc
 
+Файл Postman для тестирования api в каталоге Doc
+
 
 # Test task description
 
