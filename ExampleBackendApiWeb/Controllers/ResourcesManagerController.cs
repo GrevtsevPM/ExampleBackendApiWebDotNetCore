@@ -206,7 +206,7 @@ namespace ExampleBackendApiWeb.Controllers
             try
             {
                 ModifyDataResultEnum operationResult;
-                var newId = dataManager.CreateWithNewId(value, out operationResult);
+                var newId = dataManager.resourceRepository.Create(out operationResult, value);
 
                 if (ModifyDataResultHelper.IsResultError(operationResult))
                 {

@@ -37,7 +37,7 @@ namespace ExampleBackendApiWeb.DataManager.Tests
         {
             ModifyDataResultEnum operationResult;
 
-            Assert.IsTrue(testObj.CreateWithNewId("testval", out operationResult) > 0);
+            Assert.IsTrue(testObj.resourceRepository.Create(out operationResult, "testval") > 0);
             Assert.AreEqual(ModifyDataResultEnum.Success, operationResult);
         }
     }

@@ -16,7 +16,7 @@ namespace ExampleBackendApiWeb.DataManager
         /// <summary>
         /// ресурсы
         /// </summary>
-        Dictionary<T, string> resources;
+        protected Dictionary<T, string> resources;
 
         public Dictionary<T, string> Resources
         {
@@ -49,7 +49,7 @@ namespace ExampleBackendApiWeb.DataManager
         /// <param name="id"></param>
         /// <param name="newValue">обновлённое значение</param>
         /// <param name="eventType">тип события</param>
-        void setLastChange(T id, string newValue, string eventType)
+        protected void setLastChange(T id, string newValue, string eventType)
         {
             LastChangedId = id;
             LastChangedValue = newValue;
@@ -57,12 +57,12 @@ namespace ExampleBackendApiWeb.DataManager
             SendWebhook = true;
         }
 
-        public IEnumerable<ResourceItemModel<T>> GetAll()
+        public virtual IEnumerable<ResourceItemModel<T>> GetAll()
         {
             return resources.Select(r => new ResourceItemModel<T>(r.Key, r.Value));
         }
 
-        public string GetById(T id, out ModifyDataResultEnum operationResult)
+        public virtual string GetById(T id, out ModifyDataResultEnum operationResult)
         {
             if (resources.ContainsKey(id))
             {
@@ -76,7 +76,7 @@ namespace ExampleBackendApiWeb.DataManager
             }
         }
 
-        public string GetSubstring(T id, int start, int length, out ModifyDataResultEnum operationResult)
+        public virtual string GetSubstring(T id, int start, int length, out ModifyDataResultEnum operationResult)
         {
             if (resources.ContainsKey(id))
             {
@@ -102,7 +102,7 @@ namespace ExampleBackendApiWeb.DataManager
             return null;
         }
 
-        public ModifyDataResultEnum Create(T newId, string value = "")
+        public virtual ModifyDataResultEnum Create(T newId, string value = "")
         {
             if (resources.ContainsKey(newId)) return ModifyDataResultEnum.ErrConflict;
             resources.Add(newId, value);
@@ -111,7 +111,7 @@ namespace ExampleBackendApiWeb.DataManager
             return ModifyDataResultEnum.Success;
         }
 
-        public ModifyDataResultEnum ReplaceItem(T id, string value)
+        public virtual ModifyDataResultEnum ReplaceItem(T id, string value)
         {
             if (resources.ContainsKey(id))
             {
@@ -125,7 +125,7 @@ namespace ExampleBackendApiWeb.DataManager
             }
         }
 
-        public ModifyDataResultEnum Delete(T id)
+        public virtual ModifyDataResultEnum Delete(T id)
         {
             if (resources.ContainsKey(id))
             {
@@ -139,7 +139,7 @@ namespace ExampleBackendApiWeb.DataManager
             }
         }
 
-        public string UpdateInsertSubstr(T id, string value, UpdateResourceCommandTypeEnum updateType, out ModifyDataResultEnum operationResult, int index = -1)
+        public virtual string UpdateInsertSubstr(T id, string value, UpdateResourceCommandTypeEnum updateType, out ModifyDataResultEnum operationResult, int index = -1)
         {
             if (!resources.ContainsKey(id))
             {
@@ -184,7 +184,7 @@ namespace ExampleBackendApiWeb.DataManager
             return resultVal;
         }
 
-        public string UpdateRemoveSubstr(T id, int index, int length, out ModifyDataResultEnum operationResult)
+        public virtual string UpdateRemoveSubstr(T id, int index, int length, out ModifyDataResultEnum operationResult)
         {
             if (!resources.ContainsKey(id))
             {
@@ -206,7 +206,7 @@ namespace ExampleBackendApiWeb.DataManager
             return resultVal;
         }
 
-        public string UpdateReplaceSubstr(T id, string oldVal, string newVal, out ModifyDataResultEnum operationResult)
+        public virtual string UpdateReplaceSubstr(T id, string oldVal, string newVal, out ModifyDataResultEnum operationResult)
         {
             if (!resources.ContainsKey(id))
             {

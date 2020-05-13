@@ -12,7 +12,7 @@ namespace ExampleBackendApiWeb.DataManager
     /// </summary>
     public class DataManagerClass : IDataManagerClass
     {
-        public IResourceRepository<int> resourceRepository { get; }
+        public IResourceRepositoryIntId resourceRepository { get; }
 
         public long blockStamp { set; get; } = 0;
 
@@ -25,14 +25,7 @@ namespace ExampleBackendApiWeb.DataManager
                 initialData.Add(2, "bar");
                 initialData.Add(4, "baz");
             }
-            resourceRepository = new ResourceRepository<int>(initialData);
-        }
-
-        public int CreateWithNewId(string value, out ModifyDataResultEnum operationResult)
-        {
-            var newId = resourceRepository.Resources.Keys.Count > 0 ? resourceRepository.Resources.Keys.Max() + 1 : 1;
-            operationResult = resourceRepository.Create(newId, value);
-            return newId;
+            resourceRepository = new ResourceRepositoryIntId(initialData);
         }
     }
 }
